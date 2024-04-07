@@ -1,7 +1,6 @@
 import { signJwtToken } from '../utils/jwt.js'
 import { getClient } from '../utils/initDatabase.js'
 import bcrypt from 'bcrypt'
-import { sendEmail } from '../utils/Resend.js'
 import { isStrongPassword } from '../utils/passwordChecker.js'
 
 export const register = async (req, res) => {
@@ -40,12 +39,6 @@ export const register = async (req, res) => {
       'INSERT INTO users (name, email, password, role_id) VALUES ($1, $2, $3, $4) RETURNING *',
       [name, email, hashedPassword, roleId]
     )
-
-    //   await sendEmail(
-    //     email,
-    //     'Courses Library',
-    //     '<h3>You are successfully registered to the Courses Library</h3>'
-    //   )
 
     res.status(201).json({
       message: 'successfully Registered',
